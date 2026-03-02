@@ -21,6 +21,20 @@ bool nameLess(const Movie& a, const Movie& b) {
     return a.name < b.name;
 }
 
+bool MovieDatabase::ratingDescNameAsc(const Movie& a, const Movie& b) {
+    if (a.rating != b.rating) return a.rating > b.rating;
+    return a.name < b.name;
+}
+
+auto lo = lower_bound(movies.begin(), movies.end(), prefix,
+    [](const Movie& m, const string& s) {
+        return m.name < s;
+    });
+auto hi = lo;
+while (hi != movies.end() && hi->name.substr(0, prefix.size()) == prefix) {
+    hi++;
+}
+
 
 
 
