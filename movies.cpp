@@ -12,6 +12,9 @@ bool readOneMovie(const string& line, Movie& m){
   if (comma == -1)
     return false;
   m.name = line.substr(0, comma);
+if (!m.name.empty() && m.name[0] == '"') {
+    m.name = m.name.substr(1, m.name.size() - 2);
+}
   string rateStr = line.substr(comma + 1);
   m.rating = stod(rateStr);
   return true;
@@ -26,21 +29,18 @@ bool MovieDatabase::ratingDescNameAsc(const Movie& a, const Movie& b) {
     return a.name < b.name;
 }
 
-auto lo = lower_bound(movies.begin(), movies.end(), prefix,
-    [](const Movie& m, const string& s) {
-        return m.name < s;
-    });
-auto hi = lo;
-while (hi != movies.end() && hi->name.substr(0, prefix.size()) == prefix) {
-    hi++;
-}
-
 void MovieDatabase::sortByName() {
     sort(movies.begin(), movies.end(), nameLess);
 }
 
 void MovieDatabase::loadFromFile(const string& filename){
   movies.clear();
+  ifstream fin(filename);   
+
+    if (!fin.is_open()) {   
+        cerr << "Error: cannot open file " << filename << endl;
+        return;
+    }
 string line;
 while (getline(fin, line)) {
  Movie m;
@@ -63,6 +63,7 @@ bool MovieDatabase::queryPrefix(const string& prefix, string& bestLine) const {
             return m.name < s;
         });
 if (lo == movies.end() || lo->name.substr(0, prefix.size()) != prefix) {
+  cout << "No movies found with prefix " << prefix << "\n";
 return false;
 }
 auto hi = lo;
@@ -86,17 +87,27 @@ ostringstream oss;
 }
 
 void MovieDatabase::processPrefixFile(const string& prefixFilename) const {
-  vector<string> bestLines;
+  ifstream pin(prefixFilename);
+    if (!pin.is_open()) return;
+
+    vector<string> bestLines;
     string prefix;
-string bestLine;
-if (queryPrefix(prefix, bestLine)) {
-    bestLines.push_back(bestLine);
+
+    while (getline(pin, prefix)) {
+        if (!prefix.empty() && prefix.back() == '\r') prefix.pop_back();
+
+        string bestLine;
+        if (queryPrefix(prefix, bestLine)) {
+            bestLines.push_back(bestLine);
+        }
+    }
+    pin.close();
+
+    for (int i = 0; i < (int)bestLines.size(); i++) {
+        cout << bestLines[i] << "\n";
+    }
 }
-pin.close();
-for (int i = 0; i < bestLines.size(); i++) {
-    cout << bestLines[i] << "\n";
-}
-}
+
   
 
 
