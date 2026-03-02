@@ -18,9 +18,9 @@ private:
 
     void sortByName();
 
-    void queryPrefix(const std::string& prefix) const;
+    bool queryPrefix(const std::string& prefix, std::string& bestLine) const;
 
-    static bool ratingDescNameAsc(const Movie& a, const Movie& b);
+    bool ratingDescNameAsc(const Movie& a, const Movie& b);
 
-    static std::string makeUpperBoundKey(const std::string& prefix);
 };
+
