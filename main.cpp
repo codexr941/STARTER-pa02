@@ -31,7 +31,7 @@ int main(int argc, char** argv){
     db.loadFromFile(argv[1]);
     
     if (argc == 2){
-            //print all the movies in ascending alphabetical order of movie names
+            db.printAllMovies();
             return 0;
     }
 
