@@ -45,10 +45,11 @@ int main(int argc, char** argv){
     vector<string> prefixes;
     string line;
     
-    while (getline (prefixFile, line)) {
-        if (!line.empty()) {
-            prefixes.push_back(line);
-        }
+  while (getline(prefixFile, line)) {
+    if (!line.empty() && line.back() == '\r') line.pop_back();
+    if (!line.empty())
+        prefixes.push_back(line);
+}
     }
 
     //  For each prefix,
