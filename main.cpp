@@ -50,7 +50,7 @@ int main(int argc, char** argv){
     if (!line.empty())
         prefixes.push_back(line);
 }
-    }
+    
 
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
@@ -80,6 +80,7 @@ cout << "\n";
 
 for (const string& s : results) {
     cout << s << "\n";
+}
 }
 /* Add your run time analysis for part 3 of the assignment here as commented block*/
 
