@@ -59,23 +59,27 @@ int main(int argc, char** argv){
     //  For each prefix,
     //  Print the highest rated movie with that prefix if it exists.
     //cout << "Best movie with prefix " << "<replace with prefix>" << " is: " << "replace with movie name" << " with rating " << std::fixed << std::setprecision(1) << "replace with movie rating" << endl;
-vector<string> noLines;
-vector<string> bestLines;
+vector<string> results;
 
 for (const string& prefix : prefixes) {
     string bestLine;
     bool ok = db.queryPrefix(prefix, bestLine);
 
-    cout << "\n"; 
-
-    if (!ok) noLines.push_back("No movies found with prefix " + prefix);
-    else     bestLines.push_back(bestLine);
+    if (ok) {
+        // 这个 prefix 打印了列表，所以列表后要空一行
+        cout << "\n";
+        results.push_back(bestLine);
+    } else {
+        // 没有列表输出，所以阶段A不空行
+        results.push_back("No movies found with prefix " + prefix);
+    }
 }
 
-for (const string& s : noLines)   cout << s << "\n";
-for (const string& s : bestLines) cout << s << "\n";
-}
+cout << "\n";
 
+for (const string& s : results) {
+    cout << s << "\n";
+}
 /* Add your run time analysis for part 3 of the assignment here as commented block*/
 
 bool parseLine(string &line, string &movieName, double &movieRating) {
