@@ -76,11 +76,11 @@ for (const string& prefix : prefixes) {
     }
 }
 
-cout << "\n";
 
 for (const string& s : results) {
     cout << s << "\n";
 }
+    return 0;
 }
 /* Add your run time analysis for part 3 of the assignment here as commented block*/
 
