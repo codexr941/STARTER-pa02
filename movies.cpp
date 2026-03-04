@@ -77,7 +77,6 @@ vector<Movie> matches;
 for (int i = 0; i < (int)matches.size(); i++) {
         cout << matches[i].name << ", " << matches[i].rating << "\n";
     }
-    cout << "\n"; 
 ostringstream oss;
     oss << fixed << setprecision(1);
     oss << "Best movie with prefix " << prefix << " is: "
