@@ -43,6 +43,8 @@ int main(int argc, char** argv){
     }
 
     vector<string> prefixes;
+    string line;
+    
     while (getline (prefixFile, line)) {
         if (!line.empty()) {
             prefixes.push_back(line);
