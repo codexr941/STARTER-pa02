@@ -63,12 +63,12 @@ vector<string> bestLines;
 
 for (const string& prefix : prefixes) {
     string bestLine;
-    if (db.queryPrefix(prefix, bestLine)) {
-        bestLines.push_back(bestLine);
-    }
+    bool ok = db.queryPrefix(prefix, bestLine); 
+    cout << "\n";                               
+    if (ok) bestLines.push_back(bestLine);
 }
 
-cout << "\n";
+cout << "\n"; 
 
 for (const string& s : bestLines) {
     cout << s << endl;
