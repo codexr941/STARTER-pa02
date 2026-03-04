@@ -13,15 +13,16 @@ public:
 
     void processPrefixFile(const std::string& prefixFilename) const;
 
+    bool queryPrefix(const std::string& prefix, std::string& bestLine) const;
 private:
     std::vector<Movie> movies;
 
     void sortByName();
 
-    bool queryPrefix(const std::string& prefix, std::string& bestLine) const;
 
     static bool ratingDescNameAsc(const Movie& a, const Movie& b);
 
 };
+
 
 
