@@ -53,6 +53,7 @@ sortByName();
 }
 
 void MovieDatabase::printAllMovies() const{
+      cout << fixed << setprecision(1);
   for (int i = 0; i < (int)movies.size(); i++)
     cout << movies[i].name << ", " << movies[i].rating << "\n";
 }
@@ -63,7 +64,7 @@ bool MovieDatabase::queryPrefix(const string& prefix, string& bestLine) const {
             return m.name < s;
         });
 if (lo == movies.end() || lo->name.substr(0, prefix.size()) != prefix) {
-  cout << "No movies found with prefix " << prefix << "\n";
+  cout << "No movies found with prefix " << prefix << endl;
 return false;
 }
 auto hi = lo;
