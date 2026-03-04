@@ -59,28 +59,33 @@ void MovieDatabase::printAllMovies() const{
 }
 
 bool MovieDatabase::queryPrefix(const string& prefix, string& bestLine) const {
-  auto lo = lower_bound(movies.begin(), movies.end(), prefix,
-        [](const Movie& m, const string& s) {
-            return m.name < s;
-        });
-if (lo == movies.end() || lo->name.substr(0, prefix.size()) != prefix) {
-return false;
-}
-auto hi = lo;
-    while (hi != movies.end() && hi->name.substr(0, prefix.size()) == prefix) {
+    auto lo = lower_bound(movies.begin(), movies.end(), prefix,
+        [](const Movie& m, const string& s) { return m.name < s; });
+
+    if (lo == movies.end() || lo->name.compare(0, prefix.size(), prefix) != 0) {
+        return false;
+    }
+
+    auto hi = lo;
+    while (hi != movies.end() && hi->name.compare(0, prefix.size(), prefix) == 0) {
         hi++;
     }
-vector<Movie> matches;
-    for (auto it = lo; it != hi; it++) matches.push_back(*it);
-   sort(matches.begin(), matches.end(), MovieDatabase::ratingDescNameAsc);
-for (int i = 0; i < (int)matches.size(); i++) {
-         cout << fixed << setprecision(1);
-        cout << matches[i].name << ", " << matches[i].rating << "\n";
+
+    cout << fixed << setprecision(1);
+    const Movie* best = &(*lo);
+
+    for (auto it = lo; it != hi; ++it) {
+        cout << it->name << ", " << it->rating << "\n";
+        if (it->rating > best->rating ||
+            (it->rating == best->rating && it->name < best->name)) {
+            best = &(*it);
+        }
     }
-ostringstream oss;
+
+    ostringstream oss;
     oss << fixed << setprecision(1);
     oss << "Best movie with prefix " << prefix << " is: "
-        << matches[0].name << " with rating " << matches[0].rating;
+        << best->name << " with rating " << best->rating;
     bestLine = oss.str();
 
     return true;
