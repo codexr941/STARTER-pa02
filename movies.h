@@ -20,7 +20,8 @@ private:
 
     bool queryPrefix(const std::string& prefix, std::string& bestLine) const;
 
-    bool ratingDescNameAsc(const Movie& a, const Movie& b);
+    static bool ratingDescNameAsc(const Movie& a, const Movie& b);
 
 };
+
 
