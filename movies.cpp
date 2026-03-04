@@ -64,7 +64,6 @@ bool MovieDatabase::queryPrefix(const string& prefix, string& bestLine) const {
             return m.name < s;
         });
 if (lo == movies.end() || lo->name.substr(0, prefix.size()) != prefix) {
-  cout << "No movies found with prefix " << prefix << endl;
 return false;
 }
 auto hi = lo;
@@ -75,6 +74,7 @@ vector<Movie> matches;
     for (auto it = lo; it != hi; it++) matches.push_back(*it);
    sort(matches.begin(), matches.end(), MovieDatabase::ratingDescNameAsc);
 for (int i = 0; i < (int)matches.size(); i++) {
+         cout << fixed << setprecision(1);
         cout << matches[i].name << ", " << matches[i].rating << "\n";
     }
 ostringstream oss;
