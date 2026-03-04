@@ -59,18 +59,23 @@ int main(int argc, char** argv){
     //  For each prefix,
     //  Print the highest rated movie with that prefix if it exists.
     //cout << "Best movie with prefix " << "<replace with prefix>" << " is: " << "replace with movie name" << " with rating " << std::fixed << std::setprecision(1) << "replace with movie rating" << endl;
-vector<string> bestLines;
+vector<string> results;
 
 for (const string& prefix : prefixes) {
     string bestLine;
-    bool ok = db.queryPrefix(prefix, bestLine); 
-    cout << "\n";                               
-    if (ok) bestLines.push_back(bestLine);
+
+    bool ok = db.queryPrefix(prefix, bestLine);
+
+    if (!ok) {
+        results.push_back("No movies found with prefix " + prefix);
+    } else {
+        results.push_back(bestLine);
+    }
+
+    cout << "\n";  
 }
 
-cout << "\n"; 
-
-for (const string& s : bestLines) {
+for (const string& s : results) {
     cout << s << endl;
 }
 }
